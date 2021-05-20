@@ -3,6 +3,7 @@ import sys
 sys.path.append('..')
 import requests
 from bs4 import BeautifulSoup
+import re
 import config
 from line_bot3 import LineNotifyBot
 
@@ -35,14 +36,11 @@ class NewsGo:
         return titles
 
     def fetch_golink_from_res(self, res):
-        ''' todo: link取得 top pageを返すか等検討'''
-        soup = BeautifulSoup(res.text, 'html.parser')
-
-        link = soup.find('link')
-        link = link.text
+        ''' ToDo: soup.find('link')が動かないためsplitで代用 '''
+        link = res.text.split('<link>')[1].split('</link>')[0]  # <link></link>で囲まれたurlを取得
+        link = link.split('?')[0]   # クエリ文字列(?以降)を削除
 
         return link
-
 
 
 if __name__ == '__main__':
@@ -53,6 +51,6 @@ if __name__ == '__main__':
     link   = news_go.fetch_golink_from_res(res)
     titles = news_go.fetch_titles_from_res(res, title_num=5)
 
-    msg = '\n' + '\n\n'.join(titles) + link
+    msg = '\n' + '\n\n'.join(titles) + '\n\n' + link
 
     ln.send(message=msg)
