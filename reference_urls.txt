@@ -1,0 +1,7 @@
+
+rssGoogleNews: https://news.google.com/rss/
+googleNews: https://news.google.com/
+rssCircus: https://rsscircus.com/en/url-format-for-google-news-rss-feed/
+
+qiitaReference: https://qiita.com/KMD/items/872d8f4eed5d6ebf5df1
+
